@@ -1,26 +1,39 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+	<img alt="Vue logo" src="./assets/logo.png" />
+	<button @click="resetRangeFilter = true">Reset</button>
+	<MultiRangeSlider
+		:singleRangeSlider="false"
+		@sliderValueChanged="sliderValues"
+		:reset="resetRangeFilter"
+		:margin="6000"
+		:steps="1000"
+		:initialValue="sliderInitialValues"
+		name="price"
+		:maxSliderValue="100000"
+	/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import MultiRangeSlider from './components/MultiRangeSlider.vue';
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+	name: 'App',
+	data() {
+		return {
+			resetRangeFilter: false,
+			sliderInitialValues: null
+		};
+	},
+	components: {
+		MultiRangeSlider
+	},
+	mounted() {},
+	methods: {
+		sliderValues(data) {
+			console.log(data);
+		}
+	}
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
