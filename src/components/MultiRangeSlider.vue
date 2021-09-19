@@ -101,9 +101,11 @@ export default {
 	},
 	mounted() {
 		this.$nextTick(() => {
-			this.leftSliderValue = this.initialValue ? this.initialValue.leftSliderValue : 0;
+			if (!this.singleRangeSlider) {
+				this.leftSliderValue = this.initialValue ? this.initialValue.leftSliderValue : 0;
+				document.querySelector(`.${this.name}-left-slider`).addEventListener('change', this.inputChangeHandler);
+			}
 			this.rightSliderValue = this.initialValue ? this.maxSliderValue - this.initialValue.rightSliderValue : 0;
-			document.querySelector(`.${this.name}-left-slider`).addEventListener('change', this.inputChangeHandler);
 			document.querySelector(`.${this.name}-right-slider`).addEventListener('change', this.inputChangeHandler);
 		});
 	},
