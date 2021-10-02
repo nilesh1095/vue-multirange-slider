@@ -1,17 +1,7 @@
 <template>
 	<img alt="Vue logo" src="./assets/logo.png" />
 	<button @click="resetHandler">Reset</button>
-	<MultiRangeSlider
-		:singleRangeSlider="false"
-		@sliderChangeEvent="sliderValues"
-		@sliderInputEvent="sliderValues"
-		:reset="resetRangeFilter"
-		:margin="1"
-		:steps="1"
-		:initialValue="sliderInitialValues"
-		name="price"
-		:maxSliderValue="100"
-	/>
+	<MultiRangeSlider @sliderChangeEvent="sliderValues" @sliderInputEvent="sliderValues" name="price" />
 </template>
 
 <script>

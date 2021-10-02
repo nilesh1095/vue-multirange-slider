@@ -34,9 +34,6 @@ export default {
 		};
 	},
 	computed: {
-		setSliderWidth() {
-			return (this.leftSliderValue / this.maxSliderValue) * 100;
-		},
 		setLeftThumb() {
 			return (this.leftSliderValue / this.maxSliderValue) * 100;
 		},
@@ -54,8 +51,8 @@ export default {
 	props: {
 		maxSliderValue: {
 			type: Number,
-			required: true,
-			default: 0
+			required: false,
+			default: 100
 		},
 		name: {
 			type: String,
@@ -69,8 +66,8 @@ export default {
 		},
 		margin: {
 			type: Number,
-			required: true,
-			default: 150000
+			required: false,
+			default: 1
 		},
 		reset: {
 			type: Boolean,
@@ -79,8 +76,8 @@ export default {
 		},
 		steps: {
 			type: Number,
-			required: true,
-			default: 1000
+			required: false,
+			default: 1
 		},
 		singleRangeSlider: {
 			type: Boolean,
@@ -131,7 +128,6 @@ export default {
 	position: relative;
 }
 .multi-range-slider .slidecontainer {
-	/* position: relative; */
 	width: 100%;
 }
 
@@ -147,8 +143,6 @@ export default {
 .multi-range-slider .slider-illusion-container {
 	position: relative;
 	margin: 0 10px;
-	/* margin-top: 18px;
-	margin-bottom: 12px; */
 }
 .multi-range-slider .slider-illusion-container .track {
 	width: 100%;
