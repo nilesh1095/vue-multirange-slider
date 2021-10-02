@@ -1,15 +1,16 @@
 <template>
 	<img alt="Vue logo" src="./assets/logo.png" />
-	<button @click="resetRangeFilter = true">Reset</button>
+	<button @click="resetHandler">Reset</button>
 	<MultiRangeSlider
 		:singleRangeSlider="false"
-		@sliderValueChanged="sliderValues"
+		@sliderChangeEvent="sliderValues"
+		@sliderInputEvent="sliderValues"
 		:reset="resetRangeFilter"
-		:margin="6000"
-		:steps="1000"
+		:margin="1"
+		:steps="1"
 		:initialValue="sliderInitialValues"
 		name="price"
-		:maxSliderValue="100000"
+		:maxSliderValue="100"
 	/>
 </template>
 
@@ -31,6 +32,12 @@ export default {
 	methods: {
 		sliderValues(data) {
 			console.log(data);
+		},
+		resetHandler() {
+			this.resetRangeFilter = true;
+			setTimeout(() => {
+				this.resetRangeFilter = false;
+			});
 		}
 	}
 };

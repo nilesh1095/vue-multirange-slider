@@ -3,7 +3,6 @@
 		<div class="slidecontainer">
 			<input
 				type="range"
-				v-on:change="leftInputChangeHandler"
 				v-on:input="leftInputChangeHandler"
 				v-model="leftSliderValue"
 				:class="[`${name}-left-slider`]"
@@ -15,17 +14,7 @@
 			/>
 		</div>
 		<div class="slidecontainer">
-			<input
-				type="range"
-				v-on:change="rightInputChangeHandler"
-				v-on:input="rightInputChangeHandler"
-				v-model="rightSliderValue"
-				:class="[`${name}-right-slider`]"
-				min="0"
-				:max="maxSliderValue"
-				:step="steps"
-				class="right-slider"
-			/>
+			<input type="range" v-on:input="rightInputChangeHandler" v-model="rightSliderValue" :class="[`${name}-right-slider`]" min="0" :max="maxSliderValue" :step="steps" class="right-slider" />
 		</div>
 		<div class="slider-illusion-container">
 			<div class="track"></div>
@@ -61,6 +50,7 @@ export default {
 			this.rightSliderValue = 0;
 		}
 	},
+	emits: ['sliderChangeEvent', 'sliderInputEvent'],
 	props: {
 		maxSliderValue: {
 			type: Number,
@@ -78,7 +68,6 @@ export default {
 			default: null
 		},
 		margin: {
-			//This prop will configure the minimum margin between high and low price
 			type: Number,
 			required: true,
 			default: 150000
@@ -103,10 +92,10 @@ export default {
 		this.$nextTick(() => {
 			if (!this.singleRangeSlider) {
 				this.leftSliderValue = this.initialValue ? this.initialValue.leftSliderValue : 0;
-				document.querySelector(`.${this.name}-left-slider`).addEventListener('change', this.inputChangeHandler);
+				document.querySelector(`.${this.name}-left-slider`).addEventListener('change', this.sliderEventEmitHandler.bind(null, 'sliderChangeEvent'));
 			}
 			this.rightSliderValue = this.initialValue ? this.maxSliderValue - this.initialValue.rightSliderValue : 0;
-			document.querySelector(`.${this.name}-right-slider`).addEventListener('change', this.inputChangeHandler);
+			document.querySelector(`.${this.name}-right-slider`).addEventListener('change', this.sliderEventEmitHandler.bind(null, 'sliderChangeEvent'));
 		});
 	},
 	methods: {
@@ -116,6 +105,7 @@ export default {
 				e.preventDefault();
 				return false;
 			}
+			this.sliderEventEmitHandler('sliderInputEvent');
 		},
 		rightInputChangeHandler(e) {
 			if (this.rightSliderValue >= this.maxSliderValue - this.leftSliderValue - this.margin) {
@@ -123,13 +113,14 @@ export default {
 				e.preventDefault();
 				return false;
 			}
+			this.sliderEventEmitHandler('sliderInputEvent');
 		},
-		inputChangeHandler() {
+		sliderEventEmitHandler(event) {
 			const data = {
 				leftSliderValue: this.leftSliderValue,
 				rightSliderValue: `${this.maxSliderValue - this.rightSliderValue}`
 			};
-			this.$emit('sliderValueChanged', data);
+			this.$emit(event, data);
 		}
 	}
 };
